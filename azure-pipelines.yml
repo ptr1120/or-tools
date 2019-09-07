@@ -24,6 +24,9 @@ steps:
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
      dotnet --info
      where sh
+     git --version
+     del "C:\Program Files\Git\usr\bin\sh.exe"
+     del "C:\Program Files\Git\bin\sh.exe"
   displayName: Install dependencies
 
 - script: |
