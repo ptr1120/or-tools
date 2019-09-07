@@ -30,6 +30,8 @@ steps:
     tools\make dotnet
   displayName: Build
 
+- publish: $(System.DefaultWorkingDirectory)/packages
+
 
 - task: VSBuild@1
   inputs:
