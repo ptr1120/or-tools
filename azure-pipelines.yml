@@ -24,7 +24,7 @@ steps:
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
       displayName: Install dependencies
 
-- script |
+- script: |
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
     call "tools\make third_party
      displayName: Build
