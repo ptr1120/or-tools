@@ -13,9 +13,15 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'x64'
   buildConfiguration: 'Release'
+  swigVersion: '4.0.0'
 
-steps:
+- script: |
+     cinst swig --version $(swigVersion)
+    displayName: Install dependencies
+
 - task: NuGetToolInstaller@1
+
+
 
 - task: NuGetCommand@2
   inputs:
