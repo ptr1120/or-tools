@@ -19,9 +19,9 @@ variables:
 steps:
 
 - script: |
-     cinst swig --version $(swigVersion)
-     cinst cmake
-     cinst dotnetcore-sdk --version $(netCoreSdkVersion)
+     #cinst swig --version $(swigVersion)
+     #cinst cmake
+     #cinst dotnetcore-sdk --version $(netCoreSdkVersion)
   displayName: Install dependencies
 
 - script: |
@@ -36,9 +36,3 @@ steps:
   inputs:
     path: $(System.DefaultWorkingDirectory)/packages
     artifact: packages
-
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
