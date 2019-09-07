@@ -7,27 +7,28 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2019'
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'x64'
   buildConfiguration: 'Release'
   swigVersion: '4.0.0'
+  netCoreSdkVersion: '2.2.301'
 
 steps:
 
 - script: |
      cinst swig --version $(swigVersion)
+     cinst cmake
+     cinst dotnetcore-sdk --version $(netCoreSdkVersion)
       displayName: Install dependencies
 
-- task: NuGetToolInstaller@1
+- script |
+    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+    call "tools\make third_party
+     displayName: Build
 
-
-
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
 
 - task: VSBuild@1
   inputs:
