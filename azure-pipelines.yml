@@ -15,9 +15,11 @@ variables:
   buildConfiguration: 'Release'
   swigVersion: '4.0.0'
 
+steps:
+
 - script: |
      cinst swig --version $(swigVersion)
-    displayName: Install dependencies
+      displayName: Install dependencies
 
 - task: NuGetToolInstaller@1
 
