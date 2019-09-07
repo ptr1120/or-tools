@@ -23,6 +23,7 @@ steps:
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
      dotnet --info
+     where sh
      del "C:\Program Files\Git\usr\bin\sh.exe"
   displayName: Install dependencies
 
