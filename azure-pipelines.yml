@@ -19,10 +19,10 @@ variables:
 steps:
 
 - script: |
-     #cinst swig --version $(swigVersion)
-     #cinst cmake
-     #cinst dotnetcore-sdk --version $(netCoreSdkVersion)
-     #dotnet --info
+     cinst swig --version $(swigVersion)
+     cinst cmake
+     cinst dotnetcore-sdk --version $(netCoreSdkVersion)
+     dotnet --info
      where sh
      del "C:\Program Files\Git\usr\bin\sh.exe"
      del "C:\Program Files\Git\bin\sh.exe"
