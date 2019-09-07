@@ -22,6 +22,7 @@ steps:
      cinst swig --version $(swigVersion)
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
+     cinst git
      dotnet --info
      where sh
      git --version
