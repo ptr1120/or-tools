@@ -22,12 +22,13 @@ steps:
      cinst swig --version $(swigVersion)
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
-      displayName: Install dependencies
+  displayName: Install dependencies
 
 - script: |
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-    call "tools\make third_party
-     displayName: Build
+    tools\make third_party
+    tools\make dotnet
+  displayName: Build
 
 
 - task: VSBuild@1
