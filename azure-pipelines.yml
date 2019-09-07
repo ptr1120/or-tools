@@ -25,10 +25,9 @@ steps:
 #  displayName: Install dependencies
 
 - script: |
-    dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\"
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-    $(System.DefaultWorkingDirectory)\tools\make third_party
-    $(System.DefaultWorkingDirectory)\tools\make dotnet
+    call "tools\make third_party"
+    call "tools\make dotnet"
   displayName: Build artifacts
 
 - task: PublishPipelineArtifact@1
