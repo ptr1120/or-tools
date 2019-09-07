@@ -22,7 +22,8 @@ steps:
      cinst swig --version $(swigVersion)
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
-     - dotnet --info
+     dotnet --info
+     del "C:\Program Files\Git\usr\bin\sh.exe"
   displayName: Install dependencies
 
 - script: |
