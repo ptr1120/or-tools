@@ -19,11 +19,13 @@ variables:
 steps:
 
 - script: |
-     clist -lo
      set PATH=C:\Program Files\Git\cmd;%PATH%
      echo %PATH%
      del "C:\Program Files\Git\usr\bin\sh.exe"
      del "C:\Program Files\Git\bin\sh.exe"
+     cinst swig --version $(swigVersion)
+     cinst dotnetcore-sdk --version $(netCoreSdkVersion)
+     clist -lo
      dotnet --info
      where sh
      where git
