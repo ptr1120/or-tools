@@ -22,6 +22,8 @@ steps:
      clist -lo
      set PATH=C:\Program Files\Git\cmd;%PATH%
      del "C:\agents\2.155.1\externals\git\cmd\git.exe"
+     del "C:\Program Files\Git\usr\bin\sh.exe"
+     del "C:\Program Files\Git\bin\sh.exe"
      dotnet --info
      where sh
      where git
