@@ -19,7 +19,7 @@ stages:
 
   jobs:
 # Linux  ######################################################################################################################
-  - job: Linux
+  - job: linux
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -87,8 +87,11 @@ stages:
         path: $(packagesFolder)
         artifact: $(artifactsName)-osx    
 # Windows  ######################################################################################################################
-  - job: WindowsBuild
+  - job: windowsBuild
     displayName: Windows
+    dependsOn:
+     - linux
+     - macOS
     pool:
       vmImage: 'windows-2019'
       
