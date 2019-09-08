@@ -30,6 +30,8 @@ steps:
 # Sh problem: sh must not be in path, see Makefile.win.mk
 - script: |
     SETX PATH "C:\Program Files\Git\cmd;%PATH%" /M
+    SETX PATH "C:\Program Files\Git\cmd;%PATH%"
+    refreshenv
     echo %PATH%
     del "C:\Program Files\Git\usr\bin\sh.exe"
     del "C:\Program Files\Git\bin\sh.exe"
