@@ -20,7 +20,7 @@ steps:
 
 - script: |
      clist -lo
-     cuninst mingw
+     set PATH=C:\Program Files\Git\cmd;%PATH%
      dotnet --info
      where sh
      where git
