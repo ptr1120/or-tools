@@ -19,12 +19,8 @@ variables:
 steps:
 
 - script: |
-     cinst swig --version $(swigVersion)
-     cinst cmake
-     cinst dotnetcore-sdk --version $(netCoreSdkVersion)
      clist -lo
-     del "C:\Program Files\Git\usr\bin\sh.exe"
-     set PATH=%PATH:C:\Program Files\Git\bin\;=%
+     cuninst mingw
      dotnet --info
      where sh
      where git
