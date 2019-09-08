@@ -21,7 +21,7 @@ steps:
 - script: |
      clist -lo
      set PATH=C:\Program Files\Git\cmd;%PATH%
-     refreshenv
+     del "C:\agents\2.155.1\externals\git\cmd\git.exe"
      dotnet --info
      where sh
      where git
