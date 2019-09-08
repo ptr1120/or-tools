@@ -19,25 +19,21 @@ variables:
 steps:
 
 - script: |
-     set PATH=C:\Program Files\Git\cmd;%PATH%
-     echo %PATH%
-     del "C:\Program Files\Git\usr\bin\sh.exe"
-     del "C:\Program Files\Git\bin\sh.exe"
      cinst swig --version $(swigVersion)
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
      clist -lo
-     dotnet --info
-     where sh
-     where git
-     git --info-path
-     git --version
   displayName: Install dependencies
 
 - script: |
+    set PATH=C:\Program Files\Git\cmd;%PATH%
+    del "C:\Program Files\Git\usr\bin\sh.exe"
+    del "C:\Program Files\Git\bin\sh.exe"
+    echo %PATH%
     git --info-path
     git --version
+    where sh
+    where git
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-    echo %PATH%
     tools\make third_party
     tools\make dotnet
   displayName: Build artifacts
