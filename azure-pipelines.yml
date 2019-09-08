@@ -51,7 +51,7 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(packagesFolder)
-        artifact: $(artifactsName)
+        artifact: $(artifactsName)-linux
 # OSX  ######################################################################################################################
   - job: macOS
     pool:
@@ -85,7 +85,7 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(packagesFolder)
-        artifact: $(artifactsName)    
+        artifact: $(artifactsName)-osx    
 # Windows  ######################################################################################################################
   - job: WindowsBuild
     displayName: Windows
@@ -132,4 +132,4 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(packagesFolder)
-        artifact: $(artifactsName)
+        artifact: $(artifactsName)-win
