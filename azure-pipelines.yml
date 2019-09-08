@@ -7,8 +7,6 @@ trigger:
 - master
 
 variables:
-  buildPlatform: 'x64'
-  buildConfiguration: 'Release'
   swigVersion: '4.0.0'
   compilerInitialization: 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"'
   packagesFolder: $(System.DefaultWorkingDirectory)/packages
@@ -32,11 +30,8 @@ stages:
        sudo apt-get -yqq install apt-transport-https dpkg dotnet-sdk-2.2
        sudo apt-get -yqq install autoconf libtool zlib1g-dev gawk curl lsb-release
        sudo apt-get -yqq install bison 
+       cd /tmp/ && wget https://github.com/swig/swig/archive/rel-$(swigVersion).tar.gz && tar zxf rel-$(swigVersion).tar.gz && cd swig-rel-$(swigVersion) && ./autogen.sh && ./configure --prefix "${HOME}"/swig/ 1>/dev/null && make >/dev/null && make install >/dev/null
       displayName: Install dependencies
-
-    - bash: |
-        cd /tmp/ && wget https://github.com/swig/swig/archive/rel-$(swigVersion).tar.gz && tar zxf rel-$(swigVersion).tar.gz && cd swig-rel-$(swigVersion) && ./autogen.sh && ./configure --prefix "${HOME}"/swig/ 1>/dev/null && make >/dev/null && make install >/dev/null
-      displayName: Install swig
 
     - bash: |    
         set CMAKE_BUILD_PARALLEL_LEVEL=4
@@ -61,10 +56,10 @@ stages:
     # Installs build/run dependencies
     - bash: |
        brew update
+       brew install swig@$(swigVersion)
        # see https://github.com/travis-ci/travis-ci/issues/10275
        brew install gcc || brew link --overwrite gcc
        brew install make ccache 
-       brew install swig
        brew upgrade python
        python3 -m pip install -q virtualenv wheel six
        brew tap caskroom/cask
