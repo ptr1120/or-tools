@@ -32,7 +32,7 @@ steps:
 # Git problem: when using "C:\agents\2.155.1\externals\git\cmd\git.exe" we get problems during abseil-cpp checkout => "git: 'remote-https' is not a git command.""
 # Sh problem: sh must not be in path, see Makefile.win.mk
 - script: |
-    setx /M PATH "C:\Program Files\Git\cmd;%PATH%""
+    SETX PATH "C:\Program Files\Git\cmd;%PATH%" /M
     echo %PATH%
     del "C:\Program Files\Git\usr\bin\sh.exe"
     del "C:\Program Files\Git\bin\sh.exe"
