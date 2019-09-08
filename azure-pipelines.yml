@@ -24,9 +24,10 @@ steps:
      clist -lo
   displayName: Install dependencies
 
+# Git problem: when using "C:\agents\2.155.1\externals\git\cmd\git.exe" we get problems during abseil-cpp checkout => "git: 'remote-https' is not a git command.""
+# Sh problem: sh must not be in path, see Makefile.win.mk
 - script: |
-    echo 'Prefer Program Files\Git over buggy C:\agents\2.155.1\externals\git\cmd\git'
-    set PATH=C:\Program Files\Git\cmd;%PATH%
+    setx /M PATH=C:\Program Files\Git\cmd;%PATH%
     echo %PATH%
     del "C:\Program Files\Git\usr\bin\sh.exe"
     del "C:\Program Files\Git\bin\sh.exe"
@@ -34,6 +35,9 @@ steps:
     git --version
     where sh
     where git
+  displayName: Fix git and sh
+
+- script: |
     call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
     echo %PATH%
     tools\make.exe detect
