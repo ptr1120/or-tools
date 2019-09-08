@@ -58,7 +58,30 @@ stages:
     pool:
       vmImage: 'macOS-latest'
     steps:
-    - script: echo hello from macOS
+    # Installs build/run dependencies
+    - bash: |
+       brew update
+       # see https://github.com/travis-ci/travis-ci/issues/10275
+       brew install gcc || brew link --overwrite gcc
+       brew install make ccache 
+       brew install swig
+       brew upgrade python
+       python3 -m pip install -q virtualenv wheel six
+       brew tap caskroom/cask
+       brew cask install dotnet-sdk
+      displayName: Install dependencies
+
+    - bash: |    
+        set CMAKE_BUILD_PARALLEL_LEVEL=4
+        make detect
+        make third_party
+      displayName: Build third_party
+    
+    - bash: |
+        set CMAKE_BUILD_PARALLEL_LEVEL=4
+        make dotnet
+      displayName: Build all languages    
+
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(packagesFolder)
