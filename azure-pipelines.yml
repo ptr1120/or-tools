@@ -24,6 +24,8 @@ steps:
      del "C:\agents\2.155.1\externals\git\cmd\git.exe"
      del "C:\Program Files\Git\usr\bin\sh.exe"
      del "C:\Program Files\Git\bin\sh.exe"
+     cinst swig --version $(swigVersion)
+     cinst dotnetcore-sdk --version $(netCoreSdkVersion)
      dotnet --info
      where sh
      where git
