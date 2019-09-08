@@ -22,7 +22,7 @@ steps:
      cinst swig --version $(swigVersion)
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
-     ren "C:\Program Files\Git" "C:\Program Files\Git_bak"
+     ren "C:\Program Files\Git" "Git_bak"
      cinst git
      dotnet --info
      where sh
