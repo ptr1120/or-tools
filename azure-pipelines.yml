@@ -31,7 +31,7 @@ stages:
        sudo apt-get update -qq 
        sudo apt-get -yqq install apt-transport-https dpkg dotnet-sdk-2.2
        sudo apt-get -yqq install autoconf libtool zlib1g-dev gawk curl lsb-release
-       sudo apt-get -yqq bison 
+       sudo apt-get -yqq install bison 
       displayName: Install dependencies
 
     - bash: |
