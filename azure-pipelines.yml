@@ -36,12 +36,15 @@ stages:
 
     - bash: |    
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        export PATH="${HOME}"/swig/bin:"${PATH}"
         make detect
         make third_party
       displayName: Build third_party
     
     - bash: |
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        export PATH="${HOME}"/swig/bin:"${PATH}"
+        swig -version
         make dotnet
       displayName: Build all languages    
        
