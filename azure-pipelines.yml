@@ -22,13 +22,12 @@ steps:
      cinst swig --version $(swigVersion)
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
+     mv "C:\Program Files\Git\" "C:\Program Files\Git_bak\"
      cinst git
      dotnet --info
      where sh
      where git
      git --version
-     del "C:\Program Files\Git\usr\bin\sh.exe"
-     del "C:\Program Files\Git\bin\sh.exe"
   displayName: Install dependencies
 
 - script: |
