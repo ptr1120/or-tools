@@ -23,16 +23,11 @@ steps:
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
      clist -lo
-     ren "C:\Program Files\Git" "Git_bak"
-     cinst git --force
-     refreshenv
      del "C:\Program Files\Git\usr\bin\sh.exe"
-     del "C:\Program Files\Git\bin\sh.exe"
      dotnet --info
      where sh
      where git
      git --version
-     set PATH=%PATH:C:\Program Files\Git\bin\;=%
   displayName: Install dependencies
 
 - script: |
