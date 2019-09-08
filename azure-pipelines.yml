@@ -109,12 +109,18 @@ stages:
     - task: DownloadBuildArtifacts@0
       displayName: 'Download Build linux Artifacts'
       inputs:
-        artifact: $(artifactsName)-$(linuxImage)
+        buildType: 'current'
+        downloadType: 'single'        
+        artifactName: $(artifactsName)-$(linuxImage)
+        downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - task: DownloadBuildArtifacts@0
       displayName: 'Download Build osx Artifacts'
       inputs:
-        artifact: $(artifactsName)-$(osxImage)
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: $(artifactsName)-$(osxImage)
+        downloadPath: '$(System.DefaultWorkingDirectory)'
                 
     # Installs build/run dependencies
     # Sh problem: sh must not be in path, see Makefile.win.mk
@@ -187,10 +193,12 @@ stages:
     steps:
       
     - task: DownloadBuildArtifacts@0
-      displayName: 'Download Build osx Artifacts'
+      displayName: 'Download Build multi platform artifacts'
       inputs:
-        artifactName: $(artifactsName)-win
-        downloadPath: $(packagesFolder)
+        buildType: 'current'
+        downloadType: 'single'        
+        artifactName: $(artifactsName)-$(windowsImage)
+        downloadPath: '$(System.DefaultWorkingDirectory)'
 
     - script: |
         dir packages
