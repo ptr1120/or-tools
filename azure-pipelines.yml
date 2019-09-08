@@ -12,6 +12,9 @@ variables:
   compilerInitialization: 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"'
   packagesFolder: $(System.DefaultWorkingDirectory)/packages
   artifactsName: packages
+  linuxImage: 'ubuntu-latest'
+  osxImage: 'macOS-latest'
+  windowsImage: 'windows-2019'
 
 stages:
 - stage: Build
@@ -21,7 +24,7 @@ stages:
 # Linux  ######################################################################################################################
   - job: linux
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: $(linuxImage)
     steps:
     # Installs build/run dependencies
     - bash: |
@@ -55,7 +58,7 @@ stages:
 # OSX  ######################################################################################################################
   - job: macOS
     pool:
-      vmImage: 'macOS-latest'
+      vmImage: $(osxImage)
     steps:
     # Installs build/run dependencies
     - bash: |
@@ -93,7 +96,7 @@ stages:
      - linux
      - macOS
     pool:
-      vmImage: 'windows-2019'
+      vmImage: $(windowsImage)
       
     steps:
 
@@ -149,3 +152,40 @@ stages:
       inputs:
         path: $(packagesFolder)
         artifact: $(artifactsName)-win
+
+
+
+
+# Windows  ######################################################################################################################
+  - job: test
+    displayName: Test
+    dependsOn:
+     - windowsBuild
+    strategy:
+      matrix:
+        linux:
+          imageName: $(linuxImage)
+          makeCmd: make
+        mac:
+          imageName: $(osxImage)
+          makeCmd: make
+        windows:
+          imageName: $(windowsImage)
+          makeCmd: tools\make.exe
+
+    pool:
+      vmImage: $(imageName)
+      
+    steps:
+      
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build osx Artifacts'
+      inputs:
+        artifactName: $(artifactsName)-win
+        downloadPath: $(packagesFolder)
+
+    - script: |
+        dir $(packagesFolder)
+        $(makeCmd) test_dotnet
+      displayName: Test
+          
