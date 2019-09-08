@@ -57,6 +57,7 @@ stages:
     - bash: |
        brew update
        brew install swig@$(swigVersion)
+       brew install cmake wget pkg-config
        # see https://github.com/travis-ci/travis-ci/issues/10275
        brew install gcc || brew link --overwrite gcc
        brew install make ccache 
