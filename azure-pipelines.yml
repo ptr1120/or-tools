@@ -15,6 +15,7 @@ variables:
   buildConfiguration: 'Release'
   swigVersion: '4.0.0'
   netCoreSdkVersion: '2.2.301'
+  compilerInitialization: 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"'
 
 steps:
 
@@ -38,12 +39,16 @@ steps:
   displayName: Fix git and sh
 
 - script: |
-    call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+    $(compilerInitialization)
     echo %PATH%
     tools\make.exe detect
     tools\make third_party
+  displayName: Build third_party
+
+- script: |
+    $(compilerInitialization)
     tools\make dotnet
-  displayName: Build artifacts
+  displayName: Build dotnet
 
 - task: PublishPipelineArtifact@1
   inputs:
