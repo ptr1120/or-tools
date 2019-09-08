@@ -22,6 +22,7 @@ steps:
      cinst swig --version $(swigVersion)
      cinst cmake
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
+     clist -lo
      ren "C:\Program Files\Git" "Git_bak"
      cinst git --force
      refreshenv
