@@ -24,6 +24,7 @@ steps:
      cinst dotnetcore-sdk --version $(netCoreSdkVersion)
      clist -lo
      del "C:\Program Files\Git\usr\bin\sh.exe"
+     set PATH=%PATH:C:\Program Files\Git\bin\;=%
      dotnet --info
      where sh
      where git
