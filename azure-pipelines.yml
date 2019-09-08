@@ -115,7 +115,7 @@ stages:
     # Installs build/run dependencies
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
-        dir $(packagesFolder)
+        dir packages
         echo 'Remove sh.exe from path'
         del "C:\Program Files\Git\usr\bin\sh.exe"
         del "C:\Program Files\Git\bin\sh.exe"
@@ -185,7 +185,7 @@ stages:
         downloadPath: $(packagesFolder)
 
     - script: |
-        dir $(packagesFolder)
+        dir packages
         $(makeCmd) test_dotnet
       displayName: Test
           
