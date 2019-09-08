@@ -96,10 +96,23 @@ stages:
       vmImage: 'windows-2019'
       
     steps:
-    
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build osx Artifacts'
+      inputs:
+        artifactName: $(artifactsName)-osx
+        downloadPath: $(packagesFolder)
+        
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build linux Artifacts'
+      inputs:
+        artifactName: $(artifactsName)-linux
+        downloadPath: $(packagesFolder)
+        
     # Installs build/run dependencies
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
+        dir $(packagesFolder)
         echo 'Remove sh.exe from path'
         del "C:\Program Files\Git\usr\bin\sh.exe"
         del "C:\Program Files\Git\bin\sh.exe"
