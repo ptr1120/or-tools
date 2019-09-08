@@ -10,7 +10,6 @@ variables:
   buildPlatform: 'x64'
   buildConfiguration: 'Release'
   swigVersion: '4.0.0'
-  netCoreSdkVersion: '2.2.301'
   compilerInitialization: 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"'
   packagesFolder: $(System.DefaultWorkingDirectory)/packages
   artifactsName: packages
@@ -32,6 +31,7 @@ stages:
        sudo apt-get update -qq 
        sudo apt-get -yqq install apt-transport-https dpkg dotnet-sdk-2.2
        sudo apt-get -yqq install autoconf libtool zlib1g-dev gawk curl lsb-release
+       sudo apt-get -yqq bison 
       displayName: Install dependencies
 
     - bash: |
@@ -65,7 +65,7 @@ stages:
         artifact: $(artifactsName)    
 # Windows  ######################################################################################################################
   - job: WindowsBuild
-    displayName: Windows build
+    displayName: Windows
     pool:
       vmImage: 'windows-2019'
       
@@ -81,7 +81,7 @@ stages:
         echo '-----------------------'
         
         cinst swig --version $(swigVersion) --no-progress
-        cinst dotnetcore-sdk --version $(netCoreSdkVersion) --no-progress
+        cinst dotnetcore-sdk --no-progress
     
         clist -lo
       displayName: Install dependencies
