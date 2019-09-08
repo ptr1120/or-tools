@@ -115,6 +115,7 @@ stages:
     # Installs build/run dependencies
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
+        dir
         dir packages
         echo 'Remove sh.exe from path'
         del "C:\Program Files\Git\usr\bin\sh.exe"
