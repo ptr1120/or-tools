@@ -25,6 +25,7 @@ steps:
      dotnet --info
      where sh
      where git
+     git --info-path
      git --version
   displayName: Install dependencies
 
