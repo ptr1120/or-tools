@@ -20,35 +20,30 @@ variables:
 
 steps:
 
+# Installs build/run dependencies
+# Sh problem: sh must not be in path, see Makefile.win.mk
 - script: |
     echo 'Remove sh.exe from path'
     del "C:\Program Files\Git\usr\bin\sh.exe"
     del "C:\Program Files\Git\bin\sh.exe"
     where sh
     echo '-----------------------'
-    cuninst git --no-progress
-    cinst git --no-progress
-    echo %PATH%
-    git --info-path
-    git --version
-    where git
+    
+    cinst swig --version $(swigVersion) --no-progress
+    cinst dotnetcore-sdk --version $(netCoreSdkVersion) --no-progress
+
     clist -lo
   displayName: Install dependencies
 
 # Git problem: when using "C:\agents\2.155.1\externals\git\cmd\git.exe" we get problems during abseil-cpp checkout => "git: 'remote-https' is not a git command.""
-# Sh problem: sh must not be in path, see Makefile.win.mk
-#- script: |
-#    SETX PATH "C:\Program Files\Git\cmd;%PATH%" /M
-#    SETX PATH "C:\Program Files\Git\cmd;%PATH%"
-#    echo %PATH%
-#    git --info-path
-#    git --version
-#    where git
-#  displayName: Fix git and sh
-
 - script: |
-    $(compilerInitialization)
+    set PATH=C:\Program Files\Git\cmd;%PATH%
     echo %PATH%
+    git --info-path
+    where git
+
+    $(compilerInitialization)
+
     tools\make.exe detect
     tools\make third_party
   displayName: Build third_party
