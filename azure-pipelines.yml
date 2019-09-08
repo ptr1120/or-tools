@@ -21,6 +21,7 @@ steps:
 - script: |
      clist -lo
      set PATH=C:\Program Files\Git\cmd;%PATH%
+     refreshenv
      dotnet --info
      where sh
      where git
