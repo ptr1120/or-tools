@@ -12,8 +12,8 @@ variables:
   compilerInitialization: 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"'
   packagesFolder: $(System.DefaultWorkingDirectory)/packages
   artifactsName: packages
-  linuxImage: 'ubuntu-latest'
-  osxImage: 'macOS-latest'
+  linuxImage: 'ubuntu-16.04'
+  osxImage: 'macOS-10.14'
   windowsImage: 'windows-2019'
 
 stages:
@@ -54,7 +54,7 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(packagesFolder)
-        artifact: $(artifactsName)-linux
+        artifact: $(artifactsName)-$(linuxImage)
 # OSX  ######################################################################################################################
   - job: macOS
     pool:
@@ -88,7 +88,7 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(packagesFolder)
-        artifact: $(artifactsName)-osx    
+        artifact: $(artifactsName)-$(osxImage)    
 # Windows  ######################################################################################################################
   - job: windowsBuild
     displayName: Windows
@@ -101,17 +101,17 @@ stages:
     steps:
 
     - task: DownloadBuildArtifacts@0
-      displayName: 'Download Build osx Artifacts'
-      inputs:
-        artifactName: $(artifactsName)-osx
-        downloadPath: $(packagesFolder)
-        
-    - task: DownloadBuildArtifacts@0
       displayName: 'Download Build linux Artifacts'
       inputs:
-        artifactName: $(artifactsName)-linux
+        artifactName: $(artifactsName)-$(linuxImage)
         downloadPath: $(packagesFolder)
-        
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build osx Artifacts'
+      inputs:
+        artifactName: $(artifactsName)-$(osxImage)
+        downloadPath: $(packagesFolder)
+                
     # Installs build/run dependencies
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
@@ -152,7 +152,7 @@ stages:
     - task: PublishPipelineArtifact@1
       inputs:
         path: $(packagesFolder)
-        artifact: $(artifactsName)-win
+        artifact: $(artifactsName)-$(windowsImage)
 
 
 
