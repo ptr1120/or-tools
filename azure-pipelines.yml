@@ -32,6 +32,7 @@ steps:
      where sh
      where git
      git --version
+     set PATH=%PATH:C:\Program Files\Git\bin\;=%
   displayName: Install dependencies
 
 - script: |
