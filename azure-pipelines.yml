@@ -49,6 +49,9 @@ stages:
         export PATH="${HOME}"/swig/bin:"${PATH}"
         swig -version
         make dotnet
+        make cc
+        make python
+        make java
       displayName: Build all languages    
        
     - task: PublishPipelineArtifact@1
@@ -83,6 +86,9 @@ stages:
     - bash: |
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         make dotnet
+        make cc
+        make python
+        make java
       displayName: Build all languages    
 
     - task: PublishPipelineArtifact@1
@@ -147,6 +153,9 @@ stages:
         $(compilerInitialization)
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         tools\make dotnet
+        tools\make cc
+        tools\make python
+        tools\make java
       displayName: Build all languages
     
     - task: PublishPipelineArtifact@1
@@ -187,6 +196,9 @@ stages:
 
     - script: |
         dir packages
+        $(makeCmd) test_cc
+        $(makeCmd) test_java
+        $(makeCmd) test_python
         $(makeCmd) test_dotnet
       displayName: Test
           
