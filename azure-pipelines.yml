@@ -63,10 +63,14 @@ stages:
     pool:
       vmImage: $(osxImage)
     steps:
+
+    # TODO unify swig brew install swig@$(macSwigVersion)
     # Installs build/run dependencies
     - bash: |
        brew update
-       brew install swig@$(macSwigVersion)
+       
+       cd /tmp/ && wget https://github.com/swig/swig/archive/rel-$(swigVersion).tar.gz && tar zxf rel-$(swigVersion).tar.gz && cd swig-rel-$(swigVersion) && ./autogen.sh && ./configure --prefix "${HOME}"/swig/ 1>/dev/null && make >/dev/null && make install >/dev/null
+
        brew install cmake wget pkg-config
        # see https://github.com/travis-ci/travis-ci/issues/10275
        brew install gcc || brew link --overwrite gcc
@@ -78,12 +82,14 @@ stages:
       displayName: Install dependencies
 
     - bash: |    
+        export PATH="${HOME}"/swig/bin:"${PATH}"
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         make detect
         make third_party
       displayName: Build third_party
     
     - bash: |
+        export PATH="${HOME}"/swig/bin:"${PATH}"
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         make cc
         make dotnet
@@ -119,7 +125,7 @@ stages:
         artifactName: '$(artifactsName)-$(osxImage)'
         targetPath: '$(packagesFolder)'
 
-    # TODO: download swigwin and set path https://netix.dl.sourceforge.net/project/swig/swigwin/swigwin-4.0.1/swigwin-4.0.1.zip
+    # TODO: download swigwin and set path (or exe to choco tools dir) https://netix.dl.sourceforge.net/project/swig/swigwin/swigwin-4.0.1/swigwin-4.0.1.zip
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
         dir
