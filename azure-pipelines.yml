@@ -175,13 +175,14 @@ stages:
     strategy:
       matrix:
         linux:
-          imageName: '$(linuxImage)'
+          # todo variables can not be used in strategy https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#expansion-of-variables
+          imageName: 'ubuntu-16.04'
           makeCmd: make
         mac:
-          imageName: '$(osxImage)'
+          imageName: 'macOS-10.14'
           makeCmd: make
         windows:
-          imageName: '$(windowsImage)'
+          imageName: 'windows-2019'
           makeCmd: tools\make.exe
 
     pool:
