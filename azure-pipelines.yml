@@ -48,10 +48,10 @@ stages:
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         export PATH="${HOME}"/swig/bin:"${PATH}"
         swig -version
+        make cc
         make dotnet
-#        make cc
-#        make python
-#        make java
+        make python
+        make java
       displayName: Build all languages    
        
     - task: PublishPipelineArtifact@1
@@ -85,10 +85,10 @@ stages:
     
     - bash: |
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        make cc
         make dotnet
-#        make cc
-#        make python
-#        make java
+        make python
+        make java
       displayName: Build all languages    
 
     - task: PublishPipelineArtifact@1
@@ -119,7 +119,7 @@ stages:
         artifactName: '$(artifactsName)-$(osxImage)'
         targetPath: '$(packagesFolder)'
 
-    # Installs build/run dependencies
+    # TODO: download swigwin and set path https://netix.dl.sourceforge.net/project/swig/swigwin/swigwin-4.0.1/swigwin-4.0.1.zip
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
         dir
@@ -130,8 +130,18 @@ stages:
         where sh
         echo '-----------------------'
         
+        dotnet --version
+        python -V
+        java -version
+
         cinst swig --version $(swigVersion) --no-progress
         cinst dotnetcore-sdk --no-progress
+        cinst python --no-progress
+        cinst openjdk --no-progress
+
+        dotnet --version
+        python -V
+        java -version
     
         clist -lo
       displayName: Install dependencies
@@ -153,10 +163,10 @@ stages:
     - script: |
         $(compilerInitialization)
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        tools\make cc
         tools\make dotnet
-#        tools\make cc
-#        tools\make python
-#        tools\make java
+        tools\make python
+        tools\make java
       displayName: Build all languages
     
     - task: PublishPipelineArtifact@1
@@ -199,8 +209,8 @@ stages:
 
     - script: |
         dir packages
+        $(makeCmd) test_cc
         $(makeCmd) test_dotnet
-#        $(makeCmd) test_cc
-#        $(makeCmd) test_java
-#        $(makeCmd) test_python
+        $(makeCmd) test_java
+        $(makeCmd) test_python
       displayName: Test
