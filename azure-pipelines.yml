@@ -105,23 +105,20 @@ stages:
       vmImage: $(windowsImage)
       
     steps:
-
-    - task: DownloadBuildArtifacts@0
+    - task: DownloadPipelineArtifact@2
       displayName: 'Download Build linux Artifacts'
       inputs:
         buildType: 'current'
-        downloadType: 'single'        
-        artifactName: $(artifactsName)-$(linuxImage)
-        downloadPath: '$(System.DefaultWorkingDirectory)'
+        artifactName: '$(artifactsName)-$(linuxImage)'
+        targetPath: '$(packagesFolder)'
 
-    - task: DownloadBuildArtifacts@0
+    - task: DownloadPipelineArtifact@2
       displayName: 'Download Build osx Artifacts'
       inputs:
         buildType: 'current'
-        downloadType: 'single'
-        artifactName: $(artifactsName)-$(osxImage)
-        downloadPath: '$(System.DefaultWorkingDirectory)'
-                
+        artifactName: '$(artifactsName)-$(osxImage)'
+        targetPath: '$(packagesFolder)'
+
     # Installs build/run dependencies
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
@@ -178,27 +175,26 @@ stages:
     strategy:
       matrix:
         linux:
-          imageName: $(linuxImage)
+          imageName: '$(linuxImage)'
           makeCmd: make
         mac:
-          imageName: $(osxImage)
+          imageName: '$(osxImage)'
           makeCmd: make
         windows:
-          imageName: $(windowsImage)
+          imageName: '$(windowsImage)'
           makeCmd: tools\make.exe
 
     pool:
-      vmImage: $(imageName)
+      vmImage: '$(imageName)''
       
     steps:
       
-    - task: DownloadBuildArtifacts@0
+    - task: DownloadPipelineArtifact@2
       displayName: 'Download Build multi platform artifacts'
       inputs:
         buildType: 'current'
-        downloadType: 'single'        
-        artifactName: $(artifactsName)-$(windowsImage)
-        downloadPath: '$(System.DefaultWorkingDirectory)'
+        artifactName: '$(artifactsName)-$(windowsImage)'
+        targetPath: '$(packagesFolder)'
 
     - script: |
         dir packages
