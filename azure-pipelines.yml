@@ -185,7 +185,7 @@ stages:
           makeCmd: tools\make.exe
 
     pool:
-      vmImage: '$(imageName)''
+      vmImage: '$(imageName)'
       
     steps:
       
