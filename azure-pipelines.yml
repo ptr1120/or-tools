@@ -67,8 +67,8 @@ stages:
     pool:
       vmImage: $(osxImage)
     steps:
-
-    # TODO unify swig brew install swig@$(macSwigVersion)
+    
+    # todo unify swig install
     # Installs build/run dependencies
     - bash: |
        brew update
