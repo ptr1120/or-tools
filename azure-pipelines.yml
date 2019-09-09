@@ -7,8 +7,7 @@ trigger:
 - master
 
 variables:
-  swigVersion: '4.0.0'
-  macSwigVersion: '4.0'
+  swigVersion: '4.0.1'
   compilerInitialization: 'call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"'
   packagesFolder: $(System.DefaultWorkingDirectory)/packages
   artifactsName: packages
@@ -125,7 +124,7 @@ stages:
         artifactName: '$(artifactsName)-$(osxImage)'
         targetPath: '$(packagesFolder)'
 
-    # TODO: download swigwin and set path (or exe to choco tools dir) https://netix.dl.sourceforge.net/project/swig/swigwin/swigwin-4.0.1/swigwin-4.0.1.zip
+    # TODO: download swigwin and set path (or exe to choco tools dir)  cinst swig --version $(swigVersion) --no-progress
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
         dir
@@ -140,14 +139,19 @@ stages:
         python -V
         java -version
 
-        cinst swig --version $(swigVersion) --no-progress
+
+        cinst wget --no-progress
+        
         cinst dotnetcore-sdk --no-progress
         cinst python --no-progress
         cinst openjdk --no-progress
 
+        wget https://netix.dl.sourceforge.net/project/swig/swigwin/swigwin-$(swigVersion)/swigwin-$(swigVersion).zip && jar xf swigwin-$(swigVersion).zip && cp swigwin-$(swigVersion)\swig.exe C:\ProgramData\chocolatey\bin\
+
         dotnet --version
         python -V
         java -version
+        swig -version
     
         clist -lo
       displayName: Install dependencies
