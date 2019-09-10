@@ -125,6 +125,7 @@ stages:
         buildType: 'current'
         artifactName: '$(artifactsName)-$(linuxImage)'
         targetPath: '$(packagesFolder)'
+        patterns: '**/*.linux-x64.*'
 
     - task: DownloadPipelineArtifact@2
       displayName: 'Download Build osx Artifacts'
@@ -132,6 +133,7 @@ stages:
         buildType: 'current'
         artifactName: '$(artifactsName)-$(osxImage)'
         targetPath: '$(packagesFolder)'
+        patterns: '**/*.osx-x64.*'
 
     # TODO: download swigwin and set path (or exe to choco tools dir)  cinst swig --version $(swigVersion) --no-progress
     # Sh problem: sh must not be in path, see Makefile.win.mk
