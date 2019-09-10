@@ -40,6 +40,17 @@ stages:
        java -version
       displayName: Install dependencies
 
+    - task: CacheBeta@0
+      inputs:
+       key: dependencies | $(Agent.OS)
+       path: dependencies\install
+       displayName: Cache dependencies
+    - task: CacheBeta@0
+      inputs:
+       key: build | $(Agent.OS)
+       path: build\dependencies\install
+       displayName: Cache dependencies build
+
     - bash: |    
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         export PATH="${HOME}"/swig/bin:"${PATH}"
@@ -67,6 +78,17 @@ stages:
       vmImage: $(osxImage)
     steps:
     
+    - task: CacheBeta@0
+      inputs:
+       key: dependencies | $(Agent.OS)
+       path: dependencies\install
+       displayName: Cache dependencies
+    - task: CacheBeta@0
+      inputs:
+       key: build | $(Agent.OS)
+       path: build\dependencies\install
+       displayName: Cache dependencies build
+
     # todo unify swig install
     # Installs build/run dependencies
     - bash: |
@@ -119,6 +141,18 @@ stages:
       vmImage: $(windowsImage)
       
     steps:
+
+    - task: CacheBeta@0
+      inputs:
+       key: dependencies | $(Agent.OS)
+       path: dependencies\install
+       displayName: Cache dependencies
+    - task: CacheBeta@0
+      inputs:
+       key: build | $(Agent.OS)
+       path: build\dependencies\install
+       displayName: Cache dependencies build
+
     - task: DownloadPipelineArtifact@2
       displayName: 'Download Build linux Artifacts'
       inputs:
@@ -227,7 +261,17 @@ stages:
         buildType: 'current'
         artifactName: '$(artifactsName)-$(windowsImage)'
         targetPath: '$(packagesFolder)'
-
+    - task: CacheBeta@0
+      inputs:
+       key: dependencies | $(Agent.OS)
+       path: dependencies\install
+       displayName: Cache dependencies
+    - task: CacheBeta@0
+      inputs:
+       key: build | $(Agent.OS)
+       path: build\dependencies\install
+       displayName: Cache dependencies build
+       
     - script: |
         dir packages
         $(makeCmd) test_cc
