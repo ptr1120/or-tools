@@ -38,12 +38,12 @@ stages:
        dotnet --version
        python -V
        java -version
-       swig -version
       displayName: Install dependencies
 
     - bash: |    
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         export PATH="${HOME}"/swig/bin:"${PATH}"
+        swig -version
         make detect
         make third_party
       displayName: Build third_party
@@ -51,7 +51,6 @@ stages:
     - bash: |
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         export PATH="${HOME}"/swig/bin:"${PATH}"
-        swig -version
         make cc
         make dotnet
         make python
@@ -87,11 +86,11 @@ stages:
        dotnet --version
        python -V
        java -version
-       swig -version
       displayName: Install dependencies
 
     - bash: |    
         export PATH="${HOME}"/swig/bin:"${PATH}"
+        swig -version
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         make detect
         make third_party
@@ -156,7 +155,7 @@ stages:
         cinst python --no-progress
         cinst openjdk --no-progress
 
-        wget https://netix.dl.sourceforge.net/project/swig/swigwin/swigwin-$(swigVersion)/swigwin-$(swigVersion).zip && jar xf swigwin-$(swigVersion).zip && cp swigwin-$(swigVersion)\swig.exe C:\ProgramData\chocolatey\bin\
+        cd %TEMP% && wget https://netix.dl.sourceforge.net/project/swig/swigwin/swigwin-$(swigVersion)/swigwin-$(swigVersion).zip && jar xf swigwin-$(swigVersion).zip && cp swigwin-$(swigVersion)\swig.exe C:\ProgramData\chocolatey\bin\
 
         dotnet --version
         python -V
