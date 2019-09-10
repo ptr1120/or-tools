@@ -53,6 +53,7 @@ stages:
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         export PATH="${HOME}"/swig/bin:"${PATH}"
         swig -version
+        
         make detect
         make third_party
       displayName: Build third_party
@@ -60,6 +61,7 @@ stages:
     - script: |
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         export PATH="${HOME}"/swig/bin:"${PATH}"
+        
         make cc
         make dotnet
         make python
@@ -90,8 +92,7 @@ stages:
     # todo unify swig install
     # Installs build/run dependencies
     - script: |
-       brew update
-       
+       brew update     
        brew install cmake wget pkg-config
        # see https://github.com/travis-ci/travis-ci/issues/10275
        brew install gcc || brew link --overwrite gcc
@@ -112,6 +113,7 @@ stages:
         export PATH="${HOME}"/swig/bin:"${PATH}"
         swig -version
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        
         make detect
         make third_party
       displayName: Build third_party
@@ -119,6 +121,7 @@ stages:
     - script: |
         export PATH="${HOME}"/swig/bin:"${PATH}"
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        
         make cc
         make dotnet
         make python
@@ -167,7 +170,6 @@ stages:
         targetPath: '$(packagesFolder)'
         patterns: '**/*.osx-x64.*'
 
-    # TODO: download swigwin and set path (or exe to choco tools dir)  cinst swig --version $(swigVersion) --no-progress
     # Sh problem: sh must not be in path, see Makefile.win.mk
     - script: |
         dir
@@ -182,9 +184,7 @@ stages:
         python -V
         java -version
 
-
         cinst wget --no-progress
-        
         cinst python --no-progress
         cinst openjdk --no-progress
 
@@ -192,9 +192,7 @@ stages:
 
         dotnet --info
         python -V
-        java -version
-        swig -version
-    
+        java -version  
         clist -lo
       displayName: Install dependencies
     
@@ -202,12 +200,12 @@ stages:
     # Git problem: when using "C:\agents\2.155.1\externals\git\cmd\git.exe" we get problems during abseil-cpp checkout => "git: 'remote-https' is not a git command.""
     - script: |
         set PATH=C:\Program Files\Git\cmd;%PATH%
-        echo %PATH%
         git --info-path
-        where git
+        swig -version
     
         $(compilerInitialization)
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        
         tools\make.exe detect
         tools\make third_party
       displayName: Build third_party
@@ -215,6 +213,7 @@ stages:
     - script: |
         $(compilerInitialization)
         set CMAKE_BUILD_PARALLEL_LEVEL=4
+        
         tools\make cc
         tools\make dotnet
         tools\make python
@@ -227,9 +226,7 @@ stages:
         artifact: $(artifactsName)-$(windowsImage)
 
 
-
-
-# Windows  ######################################################################################################################
+# Test Matrix  ######################################################################################################################
   - job: test
     displayName: Test
     dependsOn:
@@ -271,6 +268,7 @@ stages:
 
     - script: |
         dir packages
+        
         $(makeCmd) test_cc
         $(makeCmd) test_dotnet
         $(makeCmd) test_java
