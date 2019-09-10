@@ -223,10 +223,10 @@ stages:
         artifactName: '$(artifactsName)-$(windowsImage)'
         targetPath: '$(packagesFolder)'
 
+# todo       $(makeCmd) test_cc
     - script: |
         dir packages
         
-        $(makeCmd) test_cc
         $(makeCmd) test_dotnet
         $(makeCmd) test_java
         $(makeCmd) test_python
