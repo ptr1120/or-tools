@@ -51,10 +51,7 @@ stages:
         set CMAKE_BUILD_PARALLEL_LEVEL=4
         export PATH="${HOME}"/swig/bin:"${PATH}"
         
-        make cc
-        make dotnet
-        make python
-        make java
+        ./tools/release/build_delivery_unix.sh
       displayName: Build all languages    
        
     - task: PublishPipelineArtifact@1
